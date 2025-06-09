@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'perfil.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -76,11 +77,10 @@ class CadastrarEventoPage extends StatelessWidget {
                 icon: Icon(Icons.person, color: Colors.white),
                 tooltip: 'Perfil',
                 onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Abrindo perfil...')),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => PerfilPage()),
                   );
-                  // Exemplo de navegação futura:
-                  // Navigator.push(context, MaterialPageRoute(builder: (_) => PerfilPage()));
                 },
               ),
             ],
@@ -151,6 +151,24 @@ class VisualizarEventoPage extends StatelessWidget {
       body: Center(
         child: Text(
           'Aqui estão os detalhes do evento!',
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
+    );
+  }
+}
+
+class PerfilPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Perfil'),
+        backgroundColor: Colors.greenAccent,
+      ),
+      body: Center(
+        child: Text(
+          'Aqui estão os detalhes do perfil!',
           style: TextStyle(fontSize: 20),
         ),
       ),
