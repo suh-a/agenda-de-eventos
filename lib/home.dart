@@ -4,6 +4,10 @@ import 'package:agenda/eventos.dart';
 
 
 class HomePage extends StatelessWidget {
+  final String emailLogado; // Recebe o email do usuário logado
+
+  const HomePage({super.key, required this.emailLogado});
+
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
@@ -75,7 +79,9 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => PerfilPage()),
+                    MaterialPageRoute(
+                      builder: (_) => PerfilPage(emailLogado: emailLogado),
+                    ),
                   );
                 },
               ),

@@ -1,33 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:agenda/home.dart';
-
-class UsuarioRepository {
-  static String? nome;
-  static String? dataNascimento;
-  static String? email;
-  static String? telefone;
-  static String? senha;
-
-  static bool get temUsuario => email != null && senha != null;
-
-  static bool validarLogin(String emailDigitado, String senhaDigitada) {
-    return emailDigitado == email && senhaDigitada == senha;
-  }
-
-  static void salvarUsuario({
-    required String nomeCompleto,
-    required String dataNasc,
-    required String emailCadastro,
-    required String telefoneCadastro,
-    required String senhaCadastro,
-  }) {
-    nome = nomeCompleto;
-    dataNascimento = dataNasc;
-    email = emailCadastro;
-    telefone = telefoneCadastro;
-    senha = senhaCadastro;
-  }
-}
+import 'package:agenda/usuarios_repository.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -42,8 +15,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final bool existeUsuario = UsuarioRepository.temUsuario;
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -77,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 30),
                     _buildButton(
                       text: 'Login',
-                      onPressed: () {
+                      onPressed: () async {
                         final email = emailController.text.trim();
                         final senha = senhaController.text;
 
@@ -86,36 +57,31 @@ class _LoginPageState extends State<LoginPage> {
                           return;
                         }
 
-                        if (!existeUsuario) {
-                          _showSnack('Nenhum usuário cadastrado. Cadastre-se.');
-                          return;
-                        }
-
-                        if (!UsuarioRepository.validarLogin(email, senha)) {
+                        final valido = await UsuarioRepository.validarLogin(email, senha);
+                        if (!valido) {
                           _showSnack('Email ou senha incorretos');
                           return;
                         }
 
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (_) => HomePage()),
+                          MaterialPageRoute(builder: (_) => HomePage(emailLogado: email)),
                         );
                       },
                     ),
                     const SizedBox(height: 20),
-                    if (!existeUsuario)
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const CadastroPage()),
-                          );
-                        },
-                        child: Text(
-                          'Cadastre-se',
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16),
-                        ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const CadastroPage()),
+                        );
+                      },
+                      child: Text(
+                        'Cadastre-se',
+                        style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16),
                       ),
+                    ),
                   ],
                 ),
               ),

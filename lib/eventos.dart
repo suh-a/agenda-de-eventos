@@ -79,7 +79,6 @@ class Evento {
     required this.ocorreu,
   });
 
-  // Exemplo de conversão para uso futuro com banco de dados
   factory Evento.fromMap(Map<String, dynamic> map) {
     return Evento(
       nome: map['nome'],
@@ -101,11 +100,11 @@ class Evento {
   }
 }
 
-// Serviço de dados (futuramente conecte ao banco de dados aqui)
+
 class EventoService {
   Future<List<Evento>> fetchEventos() async {
-    // Simulação de dados, substitua pelo acesso ao banco de dados
-    await Future.delayed(const Duration(seconds: 1)); // Simula delay de rede
+  
+    await Future.delayed(const Duration(seconds: 1));
     return [
       Evento(
         nome: 'Show de Rock',
