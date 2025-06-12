@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'appbuttombar.dart';
+import 'perfil.dart';
+import 'home.dart';
 
 class EventoDetalhesPage extends StatelessWidget {
   final Evento evento;
@@ -100,10 +103,8 @@ class Evento {
   }
 }
 
-
 class EventoService {
   Future<List<Evento>> fetchEventos() async {
-  
     await Future.delayed(const Duration(seconds: 1));
     return [
       Evento(
@@ -125,7 +126,8 @@ class EventoService {
 }
 
 class EventosPage extends StatefulWidget {
-  const EventosPage({Key? key}) : super(key: key);
+  final String? emailLogado;
+  const EventosPage({Key? key, this.emailLogado}) : super(key: key);
 
   @override
   _EventosPageState createState() => _EventosPageState();
@@ -139,6 +141,22 @@ class _EventosPageState extends State<EventosPage> {
   void initState() {
     super.initState();
     _eventosFuture = _eventoService.fetchEventos();
+  }
+
+  void _onNavTap(int index) {
+    if (index == 1) return; // já está em Eventos
+    if (index == 0) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => HomePage(emailLogado: widget.emailLogado ?? "")),
+      );
+    }
+    if (index == 2) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => PerfilPage(emailLogado: widget.emailLogado ?? "")),
+      );
+    }
   }
 
   @override
@@ -210,6 +228,11 @@ class _EventosPageState extends State<EventosPage> {
             },
           );
         },
+      ),
+      bottomNavigationBar: AppBottomBar(
+        emailLogado: widget.emailLogado ?? "",
+        currentIndex: 1,
+        onTap: _onNavTap,
       ),
     );
   }

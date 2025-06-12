@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'usuarios_repository.dart';
+import 'appbuttombar.dart';
+import 'home.dart';
+import 'eventos.dart';
 
 class PerfilPage extends StatefulWidget {
   final String emailLogado;
@@ -101,6 +104,22 @@ class _PerfilPageState extends State<PerfilPage> {
     );
   }
 
+  void _onNavTap(int index) {
+    if (index == 2) return; // já está em Perfil
+    if (index == 0) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => HomePage(emailLogado: widget.emailLogado)),
+      );
+    }
+    if (index == 1) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => EventosPage(emailLogado: widget.emailLogado)),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Color primaryColor = Theme.of(context).primaryColor;
@@ -170,6 +189,11 @@ class _PerfilPageState extends State<PerfilPage> {
             ],
           ],
         ),
+      ),
+      bottomNavigationBar: AppBottomBar(
+        emailLogado: widget.emailLogado,
+        currentIndex: 2,
+        onTap: _onNavTap,
       ),
     );
   }

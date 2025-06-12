@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
 import 'perfil.dart';
 import 'package:agenda/eventos.dart';
+import 'appbuttombar.dart';
 
 
 class HomePage extends StatelessWidget {
   final String emailLogado; // Recebe o email do usuário logado
 
   const HomePage({super.key, required this.emailLogado});
+
+  void _onNavTap(BuildContext context, int index) {
+    if (index == 0) return; // já está na Home
+    if (index == 1) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => EventosPage(emailLogado: emailLogado)),
+      );
+    }
+    if (index == 2) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => PerfilPage(emailLogado: emailLogado)),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,43 +68,10 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: primaryColor,
-        elevation: 10,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              // Botão de histórico
-              IconButton(
-                icon: Icon(Icons.history, color: Colors.white),
-                tooltip: 'Histórico',
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Abrindo histórico...')),
-                  );
-                  // Exemplo de navegação futura:
-                  // Navigator.push(context, MaterialPageRoute(builder: (_) => HistoricoPage()));
-                },
-              ),
-              SizedBox(width: 8),
-              // Botão de perfil
-              IconButton(
-                icon: Icon(Icons.person, color: Colors.white),
-                tooltip: 'Perfil',
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => PerfilPage(emailLogado: emailLogado),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+      bottomNavigationBar: AppBottomBar(
+        emailLogado: emailLogado,
+        currentIndex: 0,
+        onTap: (i) => _onNavTap(context, i),
       ),
     );
   }
