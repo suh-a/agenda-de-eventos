@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'Login.dart';
+import 'usuarios_repository.dart';
 
 class PerfilPage extends StatefulWidget {
-  const PerfilPage({Key? key}) : super(key: key);
+  final String emailLogado;
+
+  const PerfilPage({Key? key, required this.emailLogado}) : super(key: key);
 
   @override
   State<PerfilPage> createState() => _PerfilPageState();
@@ -23,13 +25,27 @@ class _PerfilPageState extends State<PerfilPage> {
   @override
   void initState() {
     super.initState();
-    nomeController = TextEditingController(text: UsuarioRepository.nome ?? '');
-    dataNascController = TextEditingController(text: UsuarioRepository.dataNascimento ?? '');
-    emailController = TextEditingController(text: UsuarioRepository.email ?? '');
-    telefoneController = TextEditingController(text: UsuarioRepository.telefone ?? '');
+    nomeController = TextEditingController();
+    dataNascController = TextEditingController();
+    emailController = TextEditingController();
+    telefoneController = TextEditingController();
     senhaController = TextEditingController();
     novaSenhaController = TextEditingController();
     confirmarNovaSenhaController = TextEditingController();
+
+    _carregarDadosUsuario();
+  }
+
+  Future<void> _carregarDadosUsuario() async {
+    final data = await UsuarioRepository.buscarUsuario(widget.emailLogado);
+    if (data != null) {
+      setState(() {
+        nomeController.text = data['nome'] ?? '';
+        dataNascController.text = data['dataNascimento'] ?? '';
+        emailController.text = data['email'] ?? '';
+        telefoneController.text = data['telefone'] ?? '';
+      });
+    }
   }
 
   @override
@@ -44,12 +60,14 @@ class _PerfilPageState extends State<PerfilPage> {
     super.dispose();
   }
 
-  void salvarEdicao() {
+  void salvarEdicao() async {
+    await UsuarioRepository.atualizarUsuario(
+      emailUsuario: widget.emailLogado,
+      nome: nomeController.text,
+      dataNascimento: dataNascController.text,
+      telefone: telefoneController.text,
+    );
     setState(() {
-      UsuarioRepository.nome = nomeController.text;
-      UsuarioRepository.dataNascimento = dataNascController.text;
-      UsuarioRepository.email = emailController.text;
-      UsuarioRepository.telefone = telefoneController.text;
       editando = false;
     });
     ScaffoldMessenger.of(context).showSnackBar(
@@ -57,8 +75,13 @@ class _PerfilPageState extends State<PerfilPage> {
     );
   }
 
-  void salvarNovaSenha() {
-    if (senhaController.text != UsuarioRepository.senha) {
+  void salvarNovaSenha() async {
+    final sucesso = await UsuarioRepository.atualizarSenha(
+      emailUsuario: widget.emailLogado,
+      senhaAtual: senhaController.text,
+      novaSenha: novaSenhaController.text,
+    );
+    if (!sucesso) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Senha atual incorreta!')),
       );
@@ -71,7 +94,6 @@ class _PerfilPageState extends State<PerfilPage> {
       return;
     }
     setState(() {
-      UsuarioRepository.senha = novaSenhaController.text;
       mudandoSenha = false;
     });
     ScaffoldMessenger.of(context).showSnackBar(
@@ -81,7 +103,7 @@ class _PerfilPageState extends State<PerfilPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Color primaryColor = Color(0xFF0099D8);
+    final Color primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
       appBar: AppBar(
         title: Text('Perfil'),
@@ -100,7 +122,7 @@ class _PerfilPageState extends State<PerfilPage> {
           ),
         ],
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -116,7 +138,7 @@ class _PerfilPageState extends State<PerfilPage> {
             const SizedBox(height: 16),
             _buildTextField('Data de nascimento', dataNascController, enabled: editando),
             const SizedBox(height: 16),
-            _buildTextField('Email', emailController, enabled: editando),
+            _buildTextField('Email', emailController, enabled: false),
             const SizedBox(height: 16),
             _buildTextField('Telefone', telefoneController, enabled: editando),
             const SizedBox(height: 32),
