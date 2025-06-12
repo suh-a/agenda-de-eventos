@@ -81,7 +81,7 @@ class _PerfilPageState extends State<PerfilPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Color primaryColor = Color(0xFF0099D8);
+    final Color primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
       appBar: AppBar(
         title: Text('Perfil'),
@@ -100,7 +100,7 @@ class _PerfilPageState extends State<PerfilPage> {
           ),
         ],
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(

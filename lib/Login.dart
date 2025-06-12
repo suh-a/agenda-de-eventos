@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const LoginApp());
-}
+import 'package:agenda/home.dart';
 
 class UsuarioRepository {
   static String? nome;
@@ -32,18 +29,6 @@ class UsuarioRepository {
   }
 }
 
-class LoginApp extends StatelessWidget {
-  const LoginApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const LoginPage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -60,10 +45,16 @@ class _LoginPageState extends State<LoginPage> {
     final bool existeUsuario = UsuarioRepository.temUsuario;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
+        title: const Text('Login'),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        elevation: Theme.of(context).appBarTheme.elevation,
+        iconTheme: Theme.of(context).appBarTheme.iconTheme,
+        titleTextStyle: Theme.of(context).appBarTheme.titleTextStyle,
+      ),
       body: Column(
         children: [
-          Container(height: 80, color: const Color(0xFF0099D8)),
           Expanded(
             child: Center(
               child: SingleChildScrollView(
@@ -107,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
 
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (_) => const HomePage()),
+                          MaterialPageRoute(builder: (_) => HomePage()),
                         );
                       },
                     ),
@@ -120,9 +111,9 @@ class _LoginPageState extends State<LoginPage> {
                             MaterialPageRoute(builder: (_) => const CadastroPage()),
                           );
                         },
-                        child: const Text(
+                        child: Text(
                           'Cadastre-se',
-                          style: TextStyle(color: Color(0xFF0099D8), fontSize: 16),
+                          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16),
                         ),
                       ),
                   ],
@@ -130,7 +121,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
-          Container(height: 40, color: const Color(0xFF0099D8)),
         ],
       ),
     );
@@ -147,19 +137,7 @@ class _LoginPageState extends State<LoginPage> {
       obscureText: obscure,
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon, color: const Color(0xFF0099D8)),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFF0099D8)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFF0099D8)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFF0099D8), width: 2),
-        ),
+        prefixIcon: Icon(icon, color: Theme.of(context).primaryColor),
       ),
     );
   }
@@ -167,13 +145,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildButton({required String text, required VoidCallback onPressed}) {
     return ElevatedButton(
       onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF0099D8),
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
-        elevation: 6,
-      ),
       child: Text(text),
     );
   }
@@ -233,10 +204,13 @@ class _CadastroPageState extends State<CadastroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text('Cadastro - Etapa $etapa'),
-        backgroundColor: const Color(0xFF0099D8),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        elevation: Theme.of(context).appBarTheme.elevation,
+        iconTheme: Theme.of(context).appBarTheme.iconTheme,
+        titleTextStyle: Theme.of(context).appBarTheme.titleTextStyle,
         leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: voltar),
       ),
       body: Column(
@@ -270,7 +244,6 @@ class _CadastroPageState extends State<CadastroPage> {
               ),
             ),
           ),
-          Container(height: 40, color: const Color(0xFF0099D8)),
         ],
       ),
     );
@@ -283,14 +256,8 @@ class _CadastroPageState extends State<CadastroPage> {
       decoration: InputDecoration(
         labelText: label,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFF0099D8)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFF0099D8), width: 2),
-        ),
+        enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
+        focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
       ),
     );
   }
@@ -298,13 +265,6 @@ class _CadastroPageState extends State<CadastroPage> {
   Widget _buildButton({required String text, required VoidCallback onPressed}) {
     return ElevatedButton(
       onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF0099D8),
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
-        elevation: 6,
-      ),
       child: Text(text),
     );
   }
@@ -314,34 +274,3 @@ class _CadastroPageState extends State<CadastroPage> {
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF0099D8),
-        title: const Text('Home'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => const LoginPage()),
-              );
-            },
-          )
-        ],
-      ),
-      body: Center(
-        child: Text(
-          'Bem-vindo, ${UsuarioRepository.nome ?? 'Usuário'}!',
-          style: const TextStyle(fontSize: 22, color: Colors.black),
-        ),
-      ),
-    );
-  }
-}

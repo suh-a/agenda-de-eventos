@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'perfil.dart';
+import 'package:agenda/eventos.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: CadastrarEventoPage(),
-    debugShowCheckedModeBanner: false,
-  ));
-}
 
-class CadastrarEventoPage extends StatelessWidget {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+    final secondaryColor = Theme.of(context).colorScheme.secondary;
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text('Cadastrar Evento'),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: primaryColor,
         elevation: 0,
       ),
       body: Padding(
@@ -42,7 +39,7 @@ class CadastrarEventoPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => VisualizarEventoPage(),
+                      builder: (context) => EventosPage(),
                     ),
                   );
                 },
@@ -52,7 +49,7 @@ class CadastrarEventoPage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.blueAccent,
+        color: primaryColor,
         elevation: 10,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
@@ -137,41 +134,5 @@ class EventCard extends StatelessWidget {
     return onTap != null
         ? GestureDetector(onTap: onTap, child: cardContent)
         : cardContent;
-  }
-}
-
-class VisualizarEventoPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Visualizar Evento'),
-        backgroundColor: Colors.indigoAccent,
-      ),
-      body: Center(
-        child: Text(
-          'Aqui estão os detalhes do evento!',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
-    );
-  }
-}
-
-class PerfilPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Perfil'),
-        backgroundColor: Colors.greenAccent,
-      ),
-      body: Center(
-        child: Text(
-          'Aqui estão os detalhes do perfil!',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
-    );
   }
 }
