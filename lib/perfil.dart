@@ -80,6 +80,12 @@ class _PerfilPageState extends State<PerfilPage> {
   }
 
   void salvarNovaSenha() async {
+    if (novaSenhaController.text != confirmarNovaSenhaController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('As novas senhas não coincidem!')),
+      );
+      return;
+    }
     final sucesso = await UsuarioRepository.atualizarSenha(
       emailUsuario: widget.emailLogado,
       senhaAtual: senhaController.text,
@@ -88,12 +94,6 @@ class _PerfilPageState extends State<PerfilPage> {
     if (!sucesso) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Senha atual incorreta!')),
-      );
-      return;
-    }
-    if (novaSenhaController.text != confirmarNovaSenhaController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('As novas senhas não coincidem!')),
       );
       return;
     }
@@ -170,11 +170,11 @@ class _PerfilPageState extends State<PerfilPage> {
               onTap: () => setState(() => mudandoSenha = !mudandoSenha),
             ),
             if (mudandoSenha) ...[
-              _buildTextField('Senha atual', senhaController, obscure: true),
+              _buildTextField('Senha atual', senhaController, enabled: true, obscure: true),
               const SizedBox(height: 12),
-              _buildTextField('Nova senha', novaSenhaController, obscure: true),
+              _buildTextField('Nova senha', novaSenhaController, enabled: true, obscure: true),
               const SizedBox(height: 12),
-              _buildTextField('Confirmar nova senha', confirmarNovaSenhaController, obscure: true),
+              _buildTextField('Confirmar nova senha', confirmarNovaSenhaController, enabled: true, obscure: true),
               const SizedBox(height: 16),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
