@@ -1,16 +1,47 @@
-# agenda
+# MinuTime
 
-A new Flutter project.
+**MinuTime** é um aplicativo desenvolvido com o objetivo de facilitar o **registro e acompanhamento de eventos pessoais**. Com uma interface simples e funcionalidades intuitivas, o app permite que os usuários **cadastrem, visualizem e gerenciem seus compromissos com praticidade**.
 
-## Getting Started
+## 📱 Funcionalidades Principais
 
-This project is a starting point for a Flutter application.
+- **Cadastro/Login:**  
+  Os usuários podem criar uma conta ou acessar com suas credenciais para ter uma experiência personalizada e segura.
 
-A few resources to get you started if this is your first Flutter project:
+- **Adicionar Evento:**  
+  É possível agendar novos eventos informando detalhes como data, hora, título e descrição.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Visualizar Eventos:**  
+  O usuário pode acessar a lista de eventos agendados e conferir rapidamente seus compromissos.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Perfil do Usuário:**  
+  Permite visualizar e alterar informações cadastradas, como nome, e-mail e senha.
+
+---
+
+## 👩‍💻 Equipe de Desenvolvimento
+
+Este projeto foi realizado como parte da disciplina **Programação de Aplicativos**. Cada integrante da equipe ficou responsável por uma parte específica do aplicativo:
+
+- **Suellen** – Tela de Perfil  
+- **Auri** – Tela de Visualizar os Eventos  
+- **Inácio** – Tela para Agendar os Eventos  
+- **Kerlon** – Tela de Início  
+- **Rick** – Tela de Login/Cadastro  
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Framework:** Flutter  
+- **Linguagem:** Dart  
+
+---
+
+## 🎥 Vídeo Pitch
+
+Assista ao vídeo explicativo do projeto no link abaixo:
+
+🔗 [Inserir link do vídeo pitch aqui]
+
+---
+
