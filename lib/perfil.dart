@@ -3,6 +3,7 @@ import 'usuarios_repository.dart';
 import 'appbuttombar.dart';
 import 'home.dart';
 import 'eventos.dart';
+import 'Login.dart';
 
 class PerfilPage extends StatefulWidget {
   final String emailLogado;
@@ -105,7 +106,7 @@ class _PerfilPageState extends State<PerfilPage> {
   }
 
   void _onNavTap(int index) {
-    if (index == 2) return; // já está em Perfil
+    if (index == 2) return; 
     if (index == 0) {
       Navigator.pushReplacement(
         context,
@@ -187,6 +188,25 @@ class _PerfilPageState extends State<PerfilPage> {
                 child: Text('Salvar nova senha'),
               ),
             ],
+            const SizedBox(height: 32),
+            // Botão personalizado para voltar ao login
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: primaryColor,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                elevation: 6,
+              ),
+              icon: Icon(Icons.logout),
+              label: Text('Sair e voltar para Login'),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => LoginPage()),
+                );
+              },
+            ),
           ],
         ),
       ),

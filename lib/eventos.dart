@@ -6,8 +6,18 @@ import 'eventos_repository.dart';
 
 class EventoDetalhesPage extends StatelessWidget {
   final Evento evento;
+  final VoidCallback? onExcluido;
 
-  const EventoDetalhesPage({Key? key, required this.evento}) : super(key: key);
+  const EventoDetalhesPage({Key? key, required this.evento, this.onExcluido}) : super(key: key);
+
+  Future<void> _excluirEvento(BuildContext context) async {
+    await EventosRepository.excluirEvento(evento);
+    Navigator.of(context).pop(); // Fecha o dialog
+    if (onExcluido != null) onExcluido!();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Evento excluído com sucesso!')),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +66,20 @@ class EventoDetalhesPage extends StatelessWidget {
                   color: evento.ocorreu ? Colors.red : Colors.green,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
+                ),
+              ),
+              const SizedBox(height: 24),
+              Center(
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                  icon: Icon(Icons.delete),
+                  label: Text('Excluir Evento'),
+                  onPressed: () => _excluirEvento(context),
                 ),
               ),
             ],
@@ -116,7 +140,13 @@ class _EventosPageState extends State<EventosPage> {
   @override
   void initState() {
     super.initState();
-    _eventosFuture = EventosRepository.buscarEventos();
+    _carregarEventos();
+  }
+
+  void _carregarEventos() {
+    setState(() {
+      _eventosFuture = EventosRepository.buscarEventos();
+    });
   }
 
   void _onNavTap(int index) {
@@ -195,7 +225,10 @@ class _EventosPageState extends State<EventosPage> {
                     showDialog(
                       context: context,
                       barrierDismissible: true,
-                      builder: (context) => EventoDetalhesPage(evento: evento),
+                      builder: (context) => EventoDetalhesPage(
+                        evento: evento,
+                        onExcluido: _carregarEventos, 
+                      ),
                     );
                   },
                 ),
