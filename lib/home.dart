@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'perfil.dart';
 import 'package:agenda/eventos.dart';
 import 'appbuttombar.dart';
+import 'addevento.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -31,7 +32,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text('Cadastrar Evento'),
+        title: Text('Home'),
         backgroundColor: primaryColor,
         elevation: 0,
       ),
@@ -39,17 +40,22 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            // Card da esquerda
             Expanded(
               child: EventCard(
                 icon: Icons.add,
                 label: "Novo Evento",
                 color: Colors.lightBlue,
-                onTap: null,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddEventoPage(),
+                    ),
+                  );
+                },
               ),
             ),
             SizedBox(width: 16),
-            // Card da direita (navega)
             Expanded(
               child: EventCard(
                 icon: Icons.visibility,
