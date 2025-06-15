@@ -24,7 +24,9 @@ void main() async {
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.white),
         titleTextStyle: TextStyle(
-          color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold,
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
         ),
       ),
       colorScheme: ColorScheme.fromSwatch().copyWith(
@@ -35,7 +37,8 @@ void main() async {
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
           foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
           elevation: 6,
         ),

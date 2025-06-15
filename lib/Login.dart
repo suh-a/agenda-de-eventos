@@ -33,6 +33,13 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Center(
+                      child: Image.asset(
+                        'lib/assets/logo_MinuTime.png',
+                        height: 120,
+                      ),
+                    ),
+                    const SizedBox(height: 40),
                     _buildTextField(
                       controller: emailController,
                       label: 'Email',
@@ -57,7 +64,8 @@ class _LoginPageState extends State<LoginPage> {
                           return;
                         }
 
-                        final valido = await UsuarioRepository.validarLogin(email, senha);
+                        final valido =
+                            await UsuarioRepository.validarLogin(email, senha);
                         if (!valido) {
                           _showSnack('Email ou senha incorretos');
                           return;
@@ -65,7 +73,8 @@ class _LoginPageState extends State<LoginPage> {
 
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (_) => HomePage(emailLogado: email)),
+                          MaterialPageRoute(
+                              builder: (_) => HomePage(emailLogado: email)),
                         );
                       },
                     ),
@@ -74,12 +83,15 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (_) => const CadastroPage()),
+                          MaterialPageRoute(
+                              builder: (_) => const CadastroPage()),
                         );
                       },
                       child: Text(
                         'Cadastre-se',
-                        style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16),
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 16),
                       ),
                     ),
                   ],
@@ -177,7 +189,8 @@ class _CadastroPageState extends State<CadastroPage> {
         elevation: Theme.of(context).appBarTheme.elevation,
         iconTheme: Theme.of(context).appBarTheme.iconTheme,
         titleTextStyle: Theme.of(context).appBarTheme.titleTextStyle,
-        leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: voltar),
+        leading:
+            IconButton(icon: const Icon(Icons.arrow_back), onPressed: voltar),
       ),
       body: Column(
         children: [
@@ -198,7 +211,9 @@ class _CadastroPageState extends State<CadastroPage> {
                     ] else if (etapa == 3) ...[
                       _buildTextField('Senha', senhaController, obscure: true),
                       const SizedBox(height: 16),
-                      _buildTextField('Confirmar senha', confirmarSenhaController, obscure: true),
+                      _buildTextField(
+                          'Confirmar senha', confirmarSenhaController,
+                          obscure: true),
                     ],
                     const SizedBox(height: 32),
                     _buildButton(
@@ -215,7 +230,8 @@ class _CadastroPageState extends State<CadastroPage> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller, {bool obscure = false}) {
+  Widget _buildTextField(String label, TextEditingController controller,
+      {bool obscure = false}) {
     return TextField(
       controller: controller,
       obscureText: obscure,
@@ -239,4 +255,3 @@ class _CadastroPageState extends State<CadastroPage> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 }
-
