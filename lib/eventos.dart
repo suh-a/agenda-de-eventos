@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'appbuttombar.dart';
 import 'perfil.dart';
 import 'home.dart';
+import 'eventos_repository.dart';
 
 class EventoDetalhesPage extends StatelessWidget {
   final Evento evento;
@@ -11,7 +12,7 @@ class EventoDetalhesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black54, // fundo escuro translúcido
+      backgroundColor: Colors.black54,
       body: Center(
         child: Container(
           margin: const EdgeInsets.all(24),
@@ -42,8 +43,6 @@ class EventoDetalhesPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Text('Local: ${evento.local}', style: TextStyle(fontSize: 18)),
-              const SizedBox(height: 8),
               Text('Endereço: ${evento.endereco}', style: TextStyle(fontSize: 18)),
               const SizedBox(height: 8),
               Text(
@@ -103,28 +102,6 @@ class Evento {
   }
 }
 
-class EventoService {
-  Future<List<Evento>> fetchEventos() async {
-    await Future.delayed(const Duration(seconds: 1));
-    return [
-      Evento(
-        nome: 'Show de Rock',
-        local: 'Arena Central',
-        endereco: 'Rua das Flores, 123',
-        data: DateTime.now().add(Duration(days: 2)),
-        ocorreu: false,
-      ),
-      Evento(
-        nome: 'Feira de Livros',
-        local: 'Praça da Cidade',
-        endereco: 'Av. Principal, 456',
-        data: DateTime.now().subtract(Duration(days: 1)),
-        ocorreu: true,
-      ),
-    ];
-  }
-}
-
 class EventosPage extends StatefulWidget {
   final String? emailLogado;
   const EventosPage({Key? key, this.emailLogado}) : super(key: key);
@@ -135,16 +112,15 @@ class EventosPage extends StatefulWidget {
 
 class _EventosPageState extends State<EventosPage> {
   late Future<List<Evento>> _eventosFuture;
-  final EventoService _eventoService = EventoService();
 
   @override
   void initState() {
     super.initState();
-    _eventosFuture = _eventoService.fetchEventos();
+    _eventosFuture = EventosRepository.buscarEventos();
   }
 
   void _onNavTap(int index) {
-    if (index == 1) return; // já está em Eventos
+    if (index == 1) return;
     if (index == 0) {
       Navigator.pushReplacement(
         context,
@@ -203,7 +179,6 @@ class _EventosPageState extends State<EventosPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 4),
-                      Text('Local: ${evento.local}'),
                       Text('Endereço: ${evento.endereco}'),
                       Text('Data: ${evento.data.day}/${evento.data.month}/${evento.data.year}'),
                       const SizedBox(height: 4),
