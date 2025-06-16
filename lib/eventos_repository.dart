@@ -8,8 +8,11 @@ class EventosRepository {
         .add(evento.toMap());
   }
 
-  static Future<List<Evento>> buscarEventos() async {
-    final snapshot = await DbFirestore.get().collection('eventos').get();
+  static Future<List<Evento>> buscarEventos(String emailUsuario) async {
+    final snapshot = await DbFirestore.get()
+        .collection('eventos')
+        .where('usuario', isEqualTo: emailUsuario)
+        .get();
     return snapshot.docs.map((doc) => Evento.fromMap(doc.data())).toList();
   }
 
