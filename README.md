@@ -41,7 +41,7 @@ Este projeto foi realizado como parte da disciplina **Programação de Aplicativ
 
 Assista ao vídeo explicativo do projeto no link abaixo:
 
-🔗 [Inserir link do vídeo pitch aqui]
+🔗 https://drive.google.com/file/d/1zPOzTcdNN8-bIjpnQPdcNclei8wwuS2-/view)
 
 ---
 
