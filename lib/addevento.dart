@@ -30,7 +30,7 @@ class _AddEventoPageState extends State<AddEventoPage> {
         local: localController.text,
         endereco: enderecoController.text,
         data: dataEvento!,
-        ocorreu: !ativo,
+        usuario: widget.emailLogado ?? '',
       );
       await EventosRepository.salvarEvento(novoEvento); // Salva no Firestore
       widget.onEventoAdicionado?.call(novoEvento);

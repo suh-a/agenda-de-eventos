@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AddEventoPage(),
+                      builder: (context) => AddEventoPage(emailLogado: emailLogado),
                     ),
                   );
                 },
@@ -65,7 +65,7 @@ class HomePage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EventosPage(),
+                      builder: (context) => EventosPage(emailLogado: emailLogado),
                     ),
                   );
                 },

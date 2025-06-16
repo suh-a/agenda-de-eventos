@@ -95,14 +95,14 @@ class Evento {
   final String local;
   final String endereco;
   final DateTime data;
-  final bool ocorreu;
+  final String usuario;
 
   Evento({
     required this.nome,
     required this.local,
     required this.endereco,
     required this.data,
-    required this.ocorreu,
+    required this.usuario,
   });
 
   factory Evento.fromMap(Map<String, dynamic> map) {
@@ -111,7 +111,7 @@ class Evento {
       local: map['local'],
       endereco: map['endereco'],
       data: DateTime.parse(map['data']),
-      ocorreu: map['ocorreu'],
+      usuario: map['usuario'] ?? '',
     );
   }
 
@@ -121,9 +121,11 @@ class Evento {
       'local': local,
       'endereco': endereco,
       'data': data.toIso8601String(),
-      'ocorreu': ocorreu,
+      'usuario': usuario,
     };
   }
+
+  bool get ocorreu => data.isBefore(DateTime.now());
 }
 
 class EventosPage extends StatefulWidget {
@@ -145,7 +147,7 @@ class _EventosPageState extends State<EventosPage> {
 
   void _carregarEventos() {
     setState(() {
-      _eventosFuture = EventosRepository.buscarEventos();
+      _eventosFuture = EventosRepository.buscarEventos(widget.emailLogado ?? '');
     });
   }
 
